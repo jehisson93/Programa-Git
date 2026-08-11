@@ -1,0 +1,15 @@
+HISTORIAL DE VERSIONES DEL PROYECTO
+===================================
+
+Este archivo resume los commits realizados en el repositorio local Git.
+La carpeta oculta .git permanece en el proyecto original, pero normalmente
+no se incluye en archivos ZIP creados con el compresor de Windows.
+
+4ae5bc3 refactor: fusionar prototipo y documentar el codigo
+b5e7eac feat: integrar aplicacion PHP y MySQL con el prototipo
+8b068ad chore: registrar prototipo HTML original
+
+Para consultar el historial directamente desde la carpeta original:
+
+git log --oneline
+
