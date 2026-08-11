@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SGI - Registrar usuario</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="registroUsuario">
+  <main class="container narrow">
+    <div class="topbar"><p class="brand">SGI</p><a class="back-link" href="index.html">Volver al inicio</a></div>
+    <section class="card" aria-labelledby="tituloRegistro">
+      <h1 id="tituloRegistro">Registrar usuario</h1>
+      <p class="subtitle">Complete los datos personales. Los campos con * son obligatorios.</p>
+      <form id="formRegistroUsuario">
+        <div class="form-grid two">
+          <div><label class="required" for="nombres">Nombres</label><input id="nombres" name="nombres" type="text" required minlength="2" maxlength="50"></div>
+          <div><label class="required" for="apellidos">Apellidos</label><input id="apellidos" name="apellidos" type="text" required minlength="2" maxlength="50"></div>
+          <div><label class="required" for="cedula">Cédula</label><input id="cedula" name="cedula" type="text" inputmode="numeric" pattern="[0-9]{6,12}" title="Ingrese entre 6 y 12 números" required></div>
+          <div><label class="required" for="correo">Correo electrónico</label><input id="correo" name="correo" type="email" autocomplete="email" required></div>
+          <div><label class="required" for="claveRegistro">Contraseña</label><input id="claveRegistro" name="clave" type="password" minlength="4" autocomplete="new-password" required></div>
+          <div><label class="required" for="fechaNacimiento">Fecha de nacimiento</label><input id="fechaNacimiento" name="fechaNacimiento" type="date" required></div>
+        </div>
+        <p id="mensajeRegistro" class="message success" role="status" hidden></p>
+        <div class="buttons"><button class="primary" type="submit">Guardar</button><a class="btn-link secondary" href="index.html">Cancelar</a></div>
+      </form>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

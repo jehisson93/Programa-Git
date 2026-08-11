@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SGI - Inicio de sesión</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="login">
+  <main class="container narrow centered">
+    <section class="card auth-card" aria-labelledby="tituloLogin">
+      <h1 id="tituloLogin">Sistema de Gestión de Inventarios</h1>
+      <p class="subtitle">Ingrese sus credenciales para acceder.</p>
+
+      <form id="formLogin">
+        <label class="required" for="usuario">Usuario</label>
+        <input type="text" id="usuario" name="usuario" autocomplete="username" required>
+
+        <label class="required" for="contrasena">Contraseña</label>
+        <input type="password" id="contrasena" name="contrasena" autocomplete="current-password" required minlength="4">
+
+        <div class="row options">
+          <label><input type="checkbox" id="mostrarContrasena"> Mostrar contraseña</label>
+        </div>
+
+        <div class="row links-row">
+          <a href="registro.html">Registrar usuario</a>
+        </div>
+
+        <p id="mensajeError" class="message error" role="alert" hidden></p>
+        <p class="demo-note"><strong>Acceso de demostración:</strong> usuario <code>admin</code> y contraseña <code>1234</code>.</p>
+
+        <div class="buttons">
+          <button id="btnIngresar" class="primary" type="submit">Ingresar</button>
+          <button id="btnLimpiarLogin" class="secondary" type="button">Limpiar</button>
+        </div>
+      </form>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

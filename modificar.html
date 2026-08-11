@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SGI - Modificar producto</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="modificar">
+  <main class="container narrow">
+    <div class="topbar"><p class="brand">SGI</p><a class="back-link" href="menu-principal.html">Volver al menú</a></div>
+    <section class="card" aria-labelledby="tituloModificar">
+      <h1 id="tituloModificar">Modificar producto</h1>
+      <label class="required" for="productoEditar">Producto a modificar</label>
+      <select id="productoEditar" required></select>
+
+      <form id="formModificarProducto">
+        <div class="form-grid two">
+          <div><label for="codigo">Código</label><input id="codigo" name="codigo" type="text" disabled></div>
+          <div><label class="required" for="nombre">Nombre</label><input id="nombre" name="nombre" type="text" required maxlength="80"></div>
+          <div class="field-full"><label for="descripcion">Descripción</label><textarea id="descripcion" name="descripcion" rows="3" maxlength="250"></textarea></div>
+          <div><label class="required" for="categoria">Categoría</label><select id="categoria" name="categoria" required><option>Electrónica</option><option>Papelería</option><option>Mobiliario</option><option>Otros</option></select></div>
+          <div><label class="required" for="unidad">Unidad de medida</label><input id="unidad" name="unidad" type="text" required maxlength="30"></div>
+          <div><label class="required" for="stockActual">Stock actual</label><input id="stockActual" name="stockActual" type="number" min="0" required></div>
+          <div><label class="required" for="stockMinimo">Stock mínimo</label><input id="stockMinimo" name="stockMinimo" type="number" min="0" required></div>
+          <div><label class="required" for="precio">Precio unitario (COP)</label><input id="precio" name="precio" type="number" min="0" step="100" required></div>
+          <div><label class="required" for="estado">Estado</label><select id="estado" name="estado" required><option>Activo</option><option>Inactivo</option></select></div>
+        </div>
+        <p id="mensajeModificar" class="message success" role="status" hidden></p>
+        <div class="buttons"><button class="primary" type="submit">Actualizar producto</button><a class="btn-link secondary" href="consultar.html">Cancelar</a></div>
+      </form>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

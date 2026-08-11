@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SGI - Registrar ajuste</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="ajuste">
+  <main class="container narrow">
+    <div class="topbar"><p class="brand">SGI</p><a class="back-link" href="menu-principal.html">Volver al menú</a></div>
+    <section class="card" aria-labelledby="tituloAjuste">
+      <h1 id="tituloAjuste">Registrar ajuste</h1>
+      <p class="subtitle">Use un número positivo para sumar o negativo para descontar.</p>
+      <form id="formAjuste">
+        <label class="required" for="ajusteProducto">Producto</label><select id="ajusteProducto" name="producto" required></select>
+        <div class="form-grid two">
+          <div><label class="required" for="ajusteUsuario">Responsable</label><input id="ajusteUsuario" name="usuario" type="text" required maxlength="60"></div>
+          <div><label class="required" for="ajusteFecha">Fecha y hora</label><input id="ajusteFecha" name="fecha" type="datetime-local" required></div>
+          <div><label class="required" for="ajusteCantidad">Cantidad ajustada (+/-)</label><input id="ajusteCantidad" name="cantidad" type="number" required></div>
+          <div><label class="required" for="ajusteMotivo">Motivo</label><input id="ajusteMotivo" name="motivo" type="text" required maxlength="100"></div>
+          <div class="field-full"><label for="ajusteObservacion">Observación</label><textarea id="ajusteObservacion" name="observacion" rows="3" maxlength="250"></textarea></div>
+        </div>
+        <p id="mensajeAjuste" class="message success" role="status" hidden></p>
+        <div class="buttons"><button class="primary" type="submit">Guardar ajuste</button><button class="secondary" type="reset">Limpiar</button></div>
+      </form>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

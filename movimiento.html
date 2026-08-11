@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SGI - Registrar movimiento</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="movimiento">
+  <main class="container narrow">
+    <div class="topbar"><p class="brand">SGI</p><a class="back-link" href="menu-principal.html">Volver al menú</a></div>
+    <section class="card" aria-labelledby="tituloMovimiento">
+      <h1 id="tituloMovimiento">Registrar movimiento</h1>
+      <p class="subtitle">Una entrada suma existencias y una salida las descuenta.</p>
+      <form id="formMovimiento">
+        <label class="required" for="movimientoProducto">Producto</label><select id="movimientoProducto" name="producto" required></select>
+        <div class="form-grid two">
+          <div><label class="required" for="movimientoUsuario">Responsable</label><input id="movimientoUsuario" name="usuario" type="text" required maxlength="60"></div>
+          <div><label class="required" for="movimientoTipo">Tipo de movimiento</label><select id="movimientoTipo" name="tipo" required><option value="">Seleccionar</option><option>Entrada</option><option>Salida</option></select></div>
+          <div><label class="required" for="movimientoFecha">Fecha y hora</label><input id="movimientoFecha" name="fecha" type="datetime-local" required></div>
+          <div><label class="required" for="movimientoCantidad">Cantidad</label><input id="movimientoCantidad" name="cantidad" type="number" min="1" required></div>
+          <div class="field-full"><label class="required" for="movimientoMotivo">Motivo</label><input id="movimientoMotivo" name="motivo" type="text" required maxlength="100"></div>
+          <div class="field-full"><label for="movimientoObservacion">Observación</label><textarea id="movimientoObservacion" name="observacion" rows="3" maxlength="250"></textarea></div>
+        </div>
+        <p id="mensajeMovimiento" class="message success" role="status" hidden></p>
+        <div class="buttons"><button class="primary" type="submit">Guardar movimiento</button><button class="secondary" type="reset">Limpiar</button></div>
+      </form>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
