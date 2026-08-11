@@ -1,4 +1,5 @@
 <?php
+// Pantalla de consulta: corresponde a la R (Read) del CRUD.
 $pageTitle = 'Productos';
 $pageName = 'productos';
 require __DIR__ . '/partials/header.php';
@@ -9,6 +10,7 @@ require __DIR__ . '/partials/header.php';
       <div><p class="eyebrow">CRUD de productos</p><h1>Consultar productos</h1></div>
       <a class="btn-link primary" href="nuevo-producto.php">Nuevo producto</a>
     </div>
+    <!-- Los filtros se envían como parámetros GET a api/productos.php. -->
     <form id="formFiltros" class="filters">
       <div class="form-grid three">
         <div><label for="buscarProducto">Nombre o código</label><input id="buscarProducto" type="search" placeholder="Ejemplo: PROD001"></div>
@@ -22,6 +24,7 @@ require __DIR__ . '/partials/header.php';
     <div class="table-wrap">
       <table>
         <thead><tr><th>Código</th><th>Nombre</th><th>Categoría</th><th>Stock</th><th>Mínimo</th><th>Precio</th><th>Estado</th><th>Acciones</th></tr></thead>
+        <!-- JavaScript reemplaza este contenido con los registros recibidos de MySQL. -->
         <tbody id="tablaProductos"><tr><td colspan="8" class="empty">Cargando productos…</td></tr></tbody>
       </table>
     </div>

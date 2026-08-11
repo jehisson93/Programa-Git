@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+/**
+ * Contiene las reglas que modifican existencias.
+ *
+ * Movimientos y ajustes se ejecutan mediante transacciones porque registrar el
+ * historial y modificar el stock forman una sola operación lógica.
+ */
 final class Inventario
 {
     public function __construct(private PDO $connection)
@@ -10,6 +16,7 @@ final class Inventario
 
     public function crearMovimiento(array $data, int $userId): int
     {
+        // Se aceptan cantidades positivas; el tipo define si se suman o restan.
         $productId = integerValue($data, 'id_producto', 1);
         $quantity = integerValue($data, 'cantidad', 1);
         $type = textValue($data, 'tipo_movimiento', 20);
@@ -17,6 +24,7 @@ final class Inventario
             throw new InvalidArgumentException('El tipo de movimiento no es válido.');
         }
 
+        // Desde aquí, todos los cambios se confirman juntos o se deshacen juntos.
         $this->connection->beginTransaction();
         try {
             $product = $this->lockProduct($productId);
@@ -42,10 +50,12 @@ final class Inventario
             ]);
             $this->updateStock($productId, $newStock);
             $movementId = (int) $this->connection->lastInsertId();
+            // commit hace permanentes el historial y el nuevo stock.
             $this->connection->commit();
             return $movementId;
         } catch (Throwable $exception) {
             if ($this->connection->inTransaction()) {
+                // rollBack evita que quede actualizado solo uno de los dos registros.
                 $this->connection->rollBack();
             }
             throw $exception;
@@ -54,6 +64,7 @@ final class Inventario
 
     public function crearAjuste(array $data, int $userId): int
     {
+        // A diferencia del movimiento, un ajuste acepta valores positivos o negativos.
         $productId = integerValue($data, 'id_producto', 1);
         $quantity = filter_var($data['cantidad_ajustada'] ?? null, FILTER_VALIDATE_INT);
         if ($quantity === false || $quantity === 0) {
@@ -94,6 +105,7 @@ final class Inventario
 
     public function listar(string $type): array
     {
+        // Los JOIN sustituyen los identificadores por nombres legibles en los reportes.
         if ($type === 'ajustes') {
             $sql = 'SELECT a.fecha_hora, p.codigo, p.nombre AS producto,
                            a.cantidad_ajustada AS cantidad, u.nombres AS usuario, a.motivo
@@ -114,6 +126,7 @@ final class Inventario
 
     private function lockProduct(int $productId): array
     {
+        // FOR UPDATE evita que dos usuarios cambien simultáneamente el mismo stock.
         $statement = $this->connection->prepare(
             "SELECT stock_actual FROM producto
              WHERE id_producto = :id AND estado = 'Activo' FOR UPDATE"
@@ -128,6 +141,7 @@ final class Inventario
 
     private function updateStock(int $productId, int $newStock): void
     {
+        // Método privado reutilizado por movimientos y ajustes.
         $statement = $this->connection->prepare(
             'UPDATE producto SET stock_actual = :stock WHERE id_producto = :id'
         );

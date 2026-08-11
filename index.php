@@ -7,11 +7,13 @@
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body data-page="login">
+  <!-- Esta página es pública; las demás comprueban una sesión PHP activa. -->
   <main class="container centered">
     <section class="card auth-card" aria-labelledby="tituloLogin">
       <p class="eyebrow">Sistema de Gestión de Inventarios</p>
       <h1 id="tituloLogin">Iniciar sesión</h1>
       <p class="subtitle">Ingrese sus credenciales para administrar el inventario.</p>
+      <!-- JavaScript envía este formulario a api/auth.php sin recargar la página. -->
       <form id="formLogin">
         <label class="required" for="correo">Correo electrónico</label>
         <input id="correo" name="correo" type="email" autocomplete="username" required value="admin@sgi.local">

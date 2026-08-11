@@ -1,9 +1,11 @@
 <?php
+// Variables consumidas por partials/header.php y assets/app.js.
 $pageTitle = 'Menú principal';
 $pageName = 'dashboard';
 require __DIR__ . '/partials/header.php';
 ?>
 <main class="container wide">
+  <!-- El panel solo contiene accesos; las operaciones viven en módulos separados. -->
   <section class="hero-card">
     <div>
       <p class="eyebrow">Panel principal</p>

@@ -1,5 +1,10 @@
 'use strict';
 
+// -----------------------------------------------------------------------------
+// Comunicación común con la API PHP
+// -----------------------------------------------------------------------------
+
+/** Envía una solicitud a PHP, convierte la respuesta JSON y centraliza errores. */
 async function apiRequest(url, options = {}) {
   const response = await fetch(url, {
     headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
@@ -7,6 +12,7 @@ async function apiRequest(url, options = {}) {
   });
   const data = await response.json().catch(() => ({ message: 'Respuesta inválida del servidor.' }));
 
+  // Una respuesta 401 indica que la sesión terminó y obliga a ingresar de nuevo.
   if (response.status === 401 && document.body.dataset.page !== 'login') {
     window.location.href = 'index.php';
     throw new Error('Sesión finalizada.');
@@ -16,9 +22,11 @@ async function apiRequest(url, options = {}) {
 }
 
 function formToObject(form) {
+  // FormData lee los controles que tengan atributo name.
   return Object.fromEntries(new FormData(form).entries());
 }
 
+/** Muestra mensajes uniformes de éxito o error debajo de los formularios. */
 function showMessage(id, text, type = 'success') {
   const element = document.getElementById(id);
   if (!element) return;
@@ -33,6 +41,7 @@ function hideMessage(id) {
 }
 
 function escapeHtml(value) {
+  // textContent evita que un dato proveniente de MySQL se interprete como HTML.
   const element = document.createElement('div');
   element.textContent = value ?? '';
   return element.innerHTML;
@@ -49,8 +58,13 @@ function formatDate(value) {
 }
 
 async function loadCatalogs() {
+  // Categorías y productos se recuperan una sola vez al abrir cada formulario.
   return apiRequest('api/catalogos.php');
 }
+
+// -----------------------------------------------------------------------------
+// Funciones reutilizables para llenar listas desplegables
+// -----------------------------------------------------------------------------
 
 function fillCategories(select, categories, includeAll = false) {
   if (!select) return;
@@ -67,6 +81,10 @@ function fillProducts(select, products) {
   ).join('');
 }
 
+// -----------------------------------------------------------------------------
+// Inicio de sesión
+// -----------------------------------------------------------------------------
+
 async function initializeLogin() {
   document.getElementById('formLogin').addEventListener('submit', async event => {
     event.preventDefault();
@@ -79,6 +97,10 @@ async function initializeLogin() {
     }
   });
 }
+
+// -----------------------------------------------------------------------------
+// CRUD de productos: crear, consultar, actualizar y eliminar
+// -----------------------------------------------------------------------------
 
 async function initializeNewProduct() {
   try {
@@ -117,6 +139,7 @@ async function initializeProducts() {
     filterForm.reset();
     loadProducts();
   });
+  // Un solo listener atiende todos los botones Eliminar de la tabla.
   document.getElementById('tablaProductos').addEventListener('click', async event => {
     const button = event.target.closest('[data-delete]');
     if (!button) return;
@@ -132,6 +155,7 @@ async function initializeProducts() {
 }
 
 async function loadProducts() {
+  // URLSearchParams construye una URL segura con los filtros seleccionados.
   const params = new URLSearchParams({
     busqueda: document.getElementById('buscarProducto').value.trim(),
     categoria: document.getElementById('filtroCategoria').value,
@@ -140,6 +164,7 @@ async function loadProducts() {
   const result = await apiRequest(`api/productos.php?${params}`);
   const table = document.getElementById('tablaProductos');
   document.getElementById('cantidadResultados').textContent = `${result.productos.length} producto(s) encontrado(s)`;
+  // map convierte cada producto recibido en una fila de la tabla.
   table.innerHTML = result.productos.length ? result.productos.map(product => {
     const lowStock = Number(product.stock_actual) <= Number(product.stock_minimo);
     return `<tr>
@@ -154,12 +179,14 @@ async function loadProducts() {
 }
 
 async function initializeEditProduct() {
+  // Ejemplo de URL esperada: editar-producto.php?id=3.
   const id = new URLSearchParams(window.location.search).get('id');
   if (!id) return showMessage('mensajeEditar', 'No se indicó el producto que desea modificar.', 'error');
 
   try {
     const [catalogs, result] = await Promise.all([loadCatalogs(), apiRequest(`api/productos.php?id=${id}`)]);
     fillCategories(document.getElementById('id_categoria'), catalogs.categorias);
+    // Los ids de los campos coinciden con los nombres entregados por la API.
     Object.entries(result.producto).forEach(([key, value]) => {
       const field = document.getElementById(key);
       if (field) field.value = value ?? '';
@@ -180,6 +207,10 @@ async function initializeEditProduct() {
     }
   });
 }
+
+// -----------------------------------------------------------------------------
+// Operaciones que cambian existencias
+// -----------------------------------------------------------------------------
 
 async function initializeMovement() {
   const form = document.getElementById('formMovimiento');
@@ -223,6 +254,10 @@ async function initializeAdjustment() {
   });
 }
 
+// -----------------------------------------------------------------------------
+// Reportes, impresión y exportación CSV
+// -----------------------------------------------------------------------------
+
 let currentReport = { headers: [], rows: [] };
 
 async function initializeReports() {
@@ -233,6 +268,7 @@ async function initializeReports() {
 }
 
 async function generateReport() {
+  // Cada tipo usa un endpoint diferente, pero termina en la misma tabla visual.
   const type = document.getElementById('tipoReporte').value;
   try {
     let data;
@@ -266,6 +302,7 @@ function renderReport(type) {
 }
 
 function exportCsv() {
+  // La marca BOM (\ufeff) ayuda a que Excel reconozca correctamente las tildes.
   if (!currentReport.rows.length) return showMessage('mensajeReporte', 'No hay datos para exportar.', 'error');
   const quote = value => `"${String(value ?? '').replaceAll('"', '""')}"`;
   const content = [currentReport.headers, ...currentReport.rows].map(row => row.map(quote).join(',')).join('\n');
@@ -277,11 +314,13 @@ function exportCsv() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Este evento se ejecuta cuando la estructura HTML ya está disponible.
   document.getElementById('btnCerrarSesion')?.addEventListener('click', async () => {
     await apiRequest('api/auth.php', { method: 'DELETE' });
     window.location.href = 'index.php';
   });
 
+  // data-page del body decide qué funciones necesita cada página.
   const initializers = {
     login: initializeLogin,
     nuevoProducto: initializeNewProduct,

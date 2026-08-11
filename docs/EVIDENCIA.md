@@ -4,7 +4,10 @@
 
 Se codificó el módulo de gestión de inventarios de acuerdo con los prototipos y el modelo de datos del proyecto. El módulo permite administrar productos y registrar los cambios en sus existencias.
 
-El prototipo HTML utilizado como punto de partida se conserva dentro de `prototipo-estatico/`. La raíz del proyecto contiene la versión funcional integrada con PHP y MySQL.
+El prototipo HTML se fusionó con la aplicación PHP: las etiquetas HTML siguen
+estando dentro de los archivos `.php`, mientras PHP aporta sesiones, componentes
+reutilizables y conexión con MySQL. La versión inicial permanece recuperable en
+el historial Git, sin mantener archivos duplicados en la versión final.
 
 La solución utiliza una arquitectura cliente-servidor:
 

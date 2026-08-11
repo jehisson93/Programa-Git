@@ -1,15 +1,18 @@
+-- Crea la base únicamente cuando todavía no existe.
 CREATE DATABASE IF NOT EXISTS sgi_inventario
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
 USE sgi_inventario;
 
+-- Los roles agrupan permisos o responsabilidades de los usuarios.
 CREATE TABLE IF NOT EXISTS rol (
   id_rol INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(50) NOT NULL UNIQUE,
   descripcion VARCHAR(150) NULL
 ) ENGINE=InnoDB;
 
+-- La contraseña se almacena como hash, nunca como texto visible.
 CREATE TABLE IF NOT EXISTS usuario (
   id_usuario INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   id_rol INT UNSIGNED NOT NULL,
@@ -23,12 +26,14 @@ CREATE TABLE IF NOT EXISTS usuario (
     ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
+-- Una categoría puede clasificar muchos productos (relación uno a muchos).
 CREATE TABLE IF NOT EXISTS categoria (
   id_categoria INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(100) NOT NULL UNIQUE,
   descripcion VARCHAR(150) NULL
 ) ENGINE=InnoDB;
 
+-- Tabla central del módulo de inventario.
 CREATE TABLE IF NOT EXISTS producto (
   id_producto INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   id_categoria INT UNSIGNED NOT NULL,
@@ -42,12 +47,14 @@ CREATE TABLE IF NOT EXISTS producto (
   estado ENUM('Activo', 'Inactivo') NOT NULL DEFAULT 'Activo',
   creado_en TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   actualizado_en TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  -- Estos índices aceleran búsquedas frecuentes por nombre y estado.
   INDEX idx_producto_nombre (nombre),
   INDEX idx_producto_estado (estado),
   CONSTRAINT fk_producto_categoria FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
     ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
+-- Guarda entradas y salidas; el stock resultante permanece en producto.
 CREATE TABLE IF NOT EXISTS movimiento (
   id_movimiento INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   id_producto INT UNSIGNED NOT NULL,
@@ -64,6 +71,7 @@ CREATE TABLE IF NOT EXISTS movimiento (
     ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
+-- Registra correcciones por conteo físico, daño, pérdida u otra novedad.
 CREATE TABLE IF NOT EXISTS ajuste (
   id_ajuste INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   id_producto INT UNSIGNED NOT NULL,
@@ -79,6 +87,7 @@ CREATE TABLE IF NOT EXISTS ajuste (
     ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
+-- Datos mínimos para probar el sistema inmediatamente después de importar.
 INSERT INTO rol (id_rol, nombre, descripcion) VALUES
   (1, 'Administrador', 'Acceso completo al sistema')
 ON DUPLICATE KEY UPDATE nombre = VALUES(nombre);
@@ -93,6 +102,7 @@ ON DUPLICATE KEY UPDATE nombre = VALUES(nombre);
 INSERT INTO usuario
   (id_usuario, id_rol, nombres, apellidos, documento, correo, clave, estado)
 VALUES
+  -- El siguiente hash corresponde a la contraseña académica Admin123*.
   (1, 1, 'Administrador', 'SGI', '1000000000', 'admin@sgi.local',
    '$2y$10$nzZYHwH8qzoDGKSUKx6R9OGQehqXDI5Gj5dO1Cfd.IrQTlHCwaWHi', 'Activo')
 ON DUPLICATE KEY UPDATE correo = VALUES(correo), clave = VALUES(clave), estado = VALUES(estado);

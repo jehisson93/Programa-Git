@@ -44,9 +44,12 @@ database/    Script de creación y datos iniciales
 docs/        Documento de apoyo para la evidencia
 models/      Acceso a datos y reglas del inventario
 partials/    Encabezado y pie reutilizables
-prototipo-estatico/ Copia del prototipo HTML anterior
 *.php        Pantallas del sistema
 ```
+
+La aplicación mantiene una sola versión activa. Los antiguos archivos HTML no
+se duplican dentro del proyecto porque las páginas PHP ya contienen el HTML de
+la interfaz y, además, permiten trabajar con sesiones y MySQL.
 
 ## Estándar de codificación
 
@@ -55,5 +58,10 @@ prototipo-estatico/ Copia del prototipo HTML anterior
 - JavaScript utiliza `camelCase` y constantes descriptivas.
 - Las consultas utilizan PDO y sentencias preparadas.
 - La lógica de base de datos está separada de las pantallas.
+- El formulario de productos se reutiliza en creación y edición mediante
+  `partials/product-form.php`.
+- El código contiene comentarios por bloques y decisiones importantes para
+  facilitar su estudio sin repetir explicaciones obvias en cada línea.
 
-Consulte `docs/EVIDENCIA.md` para el guion de presentación y la relación con la lista de chequeo.
+Consulte `docs/EVIDENCIA.md` para el guion de presentación y
+`docs/GUIA_CODIGO.md` para estudiar el recorrido del programa.

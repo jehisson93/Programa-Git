@@ -1,4 +1,5 @@
 <?php
+// Registra entradas y salidas y delega la actualización segura del stock al modelo.
 $pageTitle = 'Registrar movimiento';
 $pageName = 'movimiento';
 require __DIR__ . '/partials/header.php';
@@ -8,6 +9,7 @@ require __DIR__ . '/partials/header.php';
     <p class="eyebrow">Inventario</p>
     <h1>Registrar movimiento</h1>
     <p class="subtitle">Una entrada suma existencias y una salida las descuenta.</p>
+    <!-- El responsable no se pide aquí: se obtiene de la sesión iniciada. -->
     <form id="formMovimiento">
       <label class="required" for="movimientoProducto">Producto</label>
       <select id="movimientoProducto" name="id_producto" required><option value="">Seleccionar</option></select>

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+// Controlador REST: traduce métodos HTTP en operaciones del modelo Producto.
 require_once __DIR__ . '/../config/Database.php';
 require_once __DIR__ . '/../config/helpers.php';
 require_once __DIR__ . '/../models/Producto.php';
@@ -13,6 +14,7 @@ try {
     $method = $_SERVER['REQUEST_METHOD'];
     $id = isset($_GET['id']) ? filter_var($_GET['id'], FILTER_VALIDATE_INT) : null;
 
+    // GET con id consulta un único producto; GET sin id devuelve una lista.
     if ($method === 'GET' && $id) {
         $product = $model->buscarPorId((int) $id);
         if ($product === null) {
@@ -30,16 +32,19 @@ try {
         jsonResponse(['productos' => $model->listar($search, $category, $state)]);
     }
 
+    // POST representa la C de CRUD: crear.
     if ($method === 'POST') {
         $newId = $model->crear(readJsonBody());
         jsonResponse(['message' => 'Producto registrado correctamente.', 'id_producto' => $newId], 201);
     }
 
+    // PUT representa la U de CRUD: actualizar un registro completo.
     if ($method === 'PUT' && $id) {
         $model->actualizar((int) $id, readJsonBody());
         jsonResponse(['message' => 'Producto actualizado correctamente.']);
     }
 
+    // DELETE representa la D de CRUD: eliminar o inactivar.
     if ($method === 'DELETE' && $id) {
         $model->eliminar((int) $id);
         jsonResponse(['message' => 'Producto eliminado o inactivado correctamente.']);

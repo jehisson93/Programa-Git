@@ -1,4 +1,7 @@
-/* Variables de color para mantener una apariencia uniforme. */
+/* =============================================================================
+   1. Variables y reglas generales
+   Cambiar un color aquí actualiza todos los componentes que usan la variable.
+   ============================================================================= */
 :root {
   --bg: #eef2f5;
   --card: #ffffff;
@@ -32,6 +35,8 @@ body {
 
 a { color: var(--blue); }
 a:hover { text-decoration: underline; }
+
+/* 2. Encabezado compartido de las páginas protegidas. */
 .app-header {
   position: sticky;
   top: 0;
@@ -52,6 +57,8 @@ a:hover { text-decoration: underline; }
 .user-area { display: flex; align-items: center; gap: 12px; font-size: 14px; }
 .link-button { padding: 6px 9px; color: #fff; background: transparent; border: 1px solid rgba(255,255,255,.45); }
 .site-footer { padding: 24px; text-align: center; color: var(--muted); font-size: 13px; }
+
+/* 3. Contenedores: narrow para formularios y wide para tablas/reportes. */
 .container { width: 100%; min-height: 100dvh; padding: 24px; }
 .narrow { max-width: 600px; margin: 0 auto; }
 .wide { max-width: 1200px; margin: 0 auto; }
@@ -82,6 +89,7 @@ h2 { margin: 0 0 10px; font-size: 19px; color: #29445e; font-weight: 650; }
 .subtitle { margin: 0 0 18px; text-align: center; color: var(--muted); }
 .help { margin: 6px 0 0; color: var(--muted); font-size: 13px; }
 
+/* 4. Controles y distribución de formularios. */
 label { display: block; margin: 12px 0 6px; color: #344054; font-weight: 600; }
 .required::after { content: ' *'; color: var(--red); }
 input, select, textarea {
@@ -141,6 +149,7 @@ button:disabled { cursor: not-allowed; opacity: .55; }
 .message.error { color: #7d2b2b; background: var(--soft-red); border: 1px solid #d6a4a4; }
 .demo-note { margin: 16px 0 0; padding: 10px; border: 1px solid #ddd0a4; border-radius: 6px; background: var(--soft-yellow); font-size: 14px; color: #5e512a; }
 
+/* 5. Tarjetas de navegación disponibles en el panel principal. */
 .menu-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 .menu-item {
   display: block;
@@ -163,6 +172,7 @@ button:disabled { cursor: not-allowed; opacity: .55; }
 .badge-yellow { background: var(--soft-yellow); }
 .badge-purple { background: var(--soft-purple); }
 
+/* 6. Tablas, estados del inventario y paneles de reporte. */
 .table-wrap { overflow-x: auto; margin-top: 18px; }
 table { width: 100%; border-collapse: collapse; min-width: 760px; }
 th, td { padding: 10px; border: 1px solid var(--border); text-align: left; font-size: 14px; }
@@ -199,6 +209,7 @@ tbody tr:hover { background: #edf3f7; }
 .danger-link { padding: 0; color: var(--red); background: transparent; font-weight: 600; }
 .align-end { align-items: flex-end; }
 
+/* 7. En celular se apilan columnas y botones para conservar legibilidad. */
 @media (max-width: 768px) {
   .app-header { position: static; flex-wrap: wrap; gap: 12px; padding: 14px 16px; }
   .app-header nav { order: 3; width: 100%; overflow-x: auto; gap: 15px; }
@@ -213,6 +224,7 @@ tbody tr:hover { background: #edf3f7; }
   .hero-card, .section-heading { align-items: stretch; flex-direction: column; }
 }
 
+/* 8. Al imprimir se ocultan navegación, filtros y botones innecesarios. */
 @media print {
   body { background: #fff; }
   .app-header, .site-footer, .topbar, .filters, .buttons, .message { display: none !important; }

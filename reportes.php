@@ -1,4 +1,5 @@
 <?php
+// Reúne consultas de inventario, movimientos y ajustes sin modificar datos.
 $pageTitle = 'Reportes';
 $pageName = 'reportes';
 require __DIR__ . '/partials/header.php';
@@ -14,6 +15,7 @@ require __DIR__ . '/partials/header.php';
       <div class="buttons align-end"><button id="btnGenerarReporte" class="primary" type="button">Generar reporte</button><button id="btnExportarCsv" class="secondary" type="button">Exportar CSV</button></div>
     </div>
     <p id="mensajeReporte" class="message" role="status" hidden></p>
+    <!-- app.js genera aquí una tabla que también puede imprimirse o exportarse. -->
     <section id="vistaReporte" class="preview-box" aria-live="polite">Seleccione un reporte.</section>
   </section>
 </main>

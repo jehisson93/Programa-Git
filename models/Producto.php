@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+/**
+ * Modelo de productos.
+ *
+ * Reúne el CRUD y las validaciones relacionadas con la tabla producto. Las
+ * pantallas no contienen SQL: llaman a este modelo por medio de la API.
+ */
 final class Producto
 {
     public function __construct(private PDO $connection)
@@ -10,6 +16,7 @@ final class Producto
 
     public function listar(string $busqueda = '', ?int $categoria = null, string $estado = ''): array
     {
+        // La consulta se arma dinámicamente para agregar únicamente los filtros usados.
         $conditions = [];
         $parameters = [];
         if ($busqueda !== '') {
@@ -26,6 +33,7 @@ final class Producto
             $parameters['estado'] = $estado;
         }
 
+        // implode une las condiciones con AND: condición1 AND condición2.
         $where = $conditions ? ' WHERE ' . implode(' AND ', $conditions) : '';
         $sql = 'SELECT p.id_producto, p.id_categoria, p.codigo, p.nombre, p.descripcion,
                        p.unidad_medida, p.stock_minimo, p.stock_actual, p.precio, p.estado,
@@ -40,6 +48,7 @@ final class Producto
 
     public function buscarPorId(int $id): ?array
     {
+        // Una consulta preparada separa el SQL del valor recibido en la URL.
         $statement = $this->connection->prepare(
             'SELECT id_producto, id_categoria, codigo, nombre, descripcion, unidad_medida,
                     stock_minimo, stock_actual, precio, estado
@@ -52,6 +61,7 @@ final class Producto
 
     public function crear(array $data): int
     {
+        // Antes de insertar, se normalizan y validan todos los campos.
         $product = $this->validate($data);
         $statement = $this->connection->prepare(
             'INSERT INTO producto
@@ -65,6 +75,7 @@ final class Producto
         try {
             $statement->execute($product);
         } catch (PDOException $exception) {
+            // El código 23000 indica una restricción duplicada, normalmente codigo UNIQUE.
             if ($exception->getCode() === '23000') {
                 throw new InvalidArgumentException('El código del producto ya está registrado.');
             }
@@ -76,6 +87,7 @@ final class Producto
 
     public function actualizar(int $id, array $data): bool
     {
+        // Evita ejecutar un UPDATE silencioso sobre un identificador inexistente.
         if ($this->buscarPorId($id) === null) {
             throw new InvalidArgumentException('El producto no existe.');
         }
@@ -104,6 +116,7 @@ final class Producto
             throw new InvalidArgumentException('El producto no existe.');
         }
 
+        // Primero se comprueba si borrar rompería el historial del inventario.
         $historyStatement = $this->connection->prepare(
             'SELECT
                 (SELECT COUNT(*) FROM movimiento WHERE id_producto = :id_movimiento) +
@@ -113,10 +126,12 @@ final class Producto
         $hasHistory = (int) $historyStatement->fetchColumn() > 0;
 
         if ($hasHistory) {
+            // Con historial se aplica eliminación lógica para conservar trazabilidad.
             $statement = $this->connection->prepare(
                 "UPDATE producto SET estado = 'Inactivo' WHERE id_producto = :id"
             );
         } else {
+            // Sin historial relacionado sí se puede eliminar físicamente la fila.
             $statement = $this->connection->prepare(
                 'DELETE FROM producto WHERE id_producto = :id'
             );
@@ -127,6 +142,7 @@ final class Producto
 
     private function validate(array $data, bool $includeCode = true): array
     {
+        // Esta validación del servidor no puede ser omitida manipulando el navegador.
         $state = textValue($data, 'estado', 20);
         if (!in_array($state, ['Activo', 'Inactivo'], true)) {
             throw new InvalidArgumentException('El estado seleccionado no es válido.');
@@ -148,6 +164,7 @@ final class Producto
         }
 
         if ($includeCode) {
+            // Los códigos se guardan sin espacios y en mayúsculas para evitar duplicados visuales.
             $code = strtoupper(preg_replace('/\s+/', '', textValue($data, 'codigo', 30)));
             if (!preg_match('/^[A-Z0-9-]+$/', $code)) {
                 throw new InvalidArgumentException('El código solo puede contener letras, números y guiones.');

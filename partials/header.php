@@ -1,6 +1,8 @@
 <?php
+// Este encabezado se reutiliza en todas las páginas que requieren autenticación.
 require_once __DIR__ . '/../config/helpers.php';
 requirePageAuthentication();
+// Cada página puede sobrescribir estas variables antes de incluir el encabezado.
 $pageTitle = $pageTitle ?? 'Sistema de Gestión de Inventarios';
 ?>
 <!DOCTYPE html>
@@ -12,6 +14,7 @@ $pageTitle = $pageTitle ?? 'Sistema de Gestión de Inventarios';
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body data-page="<?= htmlspecialchars($pageName ?? '') ?>">
+  <!-- data-page permite que app.js ejecute solo el código necesario en esta vista. -->
   <header class="app-header">
     <a class="brand-link" href="dashboard.php">SGI</a>
     <nav aria-label="Navegación principal">

@@ -1,4 +1,5 @@
 <?php
+// Un ajuste corrige el stock cuando el conteo físico difiere del sistema.
 $pageTitle = 'Registrar ajuste';
 $pageName = 'ajuste';
 require __DIR__ . '/partials/header.php';
@@ -8,6 +9,7 @@ require __DIR__ . '/partials/header.php';
     <p class="eyebrow">Inventario</p>
     <h1>Registrar ajuste</h1>
     <p class="subtitle">Use un número positivo para sumar o negativo para descontar.</p>
+    <!-- Los valores positivos suman y los negativos descuentan existencias. -->
     <form id="formAjuste">
       <label class="required" for="ajusteProducto">Producto</label>
       <select id="ajusteProducto" name="id_producto" required><option value="">Seleccionar</option></select>
