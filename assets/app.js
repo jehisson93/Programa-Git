@@ -33,6 +33,14 @@ function showMessage(id, text, type = 'success') {
   element.textContent = text;
   element.className = `message ${type}`;
   element.hidden = false;
+
+  // Materialize muestra una confirmación breve sin reemplazar el mensaje accesible.
+  if (window.M?.toast) {
+    window.M.toast({
+      html: escapeHtml(text),
+      classes: type === 'error' ? 'red darken-2' : 'green darken-2'
+    });
+  }
 }
 
 function hideMessage(id) {

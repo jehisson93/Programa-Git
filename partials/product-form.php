@@ -35,7 +35,7 @@ $isEditing = $isEditing ?? false;
   <!-- JavaScript actualiza este párrafo según la respuesta entregada por la API. -->
   <p id="<?= htmlspecialchars($messageId) ?>" class="message" role="status" hidden></p>
   <div class="buttons">
-    <button class="primary" type="submit"><?= htmlspecialchars($submitLabel) ?></button>
-    <a class="btn-link secondary" href="productos.php">Cancelar</a>
+    <button class="btn waves-effect waves-light primary" type="submit"><?= htmlspecialchars($submitLabel) ?> <i class="material-icons right" aria-hidden="true">save</i></button>
+    <a class="btn waves-effect secondary" href="productos.php">Cancelar</a>
   </div>
 </form>

@@ -8,7 +8,7 @@ require __DIR__ . '/partials/header.php';
   <section class="card">
     <div class="section-heading">
       <div><p class="eyebrow">CRUD de productos</p><h1>Consultar productos</h1></div>
-      <a class="btn-link primary" href="nuevo-producto.php">Nuevo producto</a>
+      <a class="btn waves-effect waves-light primary" href="nuevo-producto.php">Nuevo producto <i class="material-icons right" aria-hidden="true">add</i></a>
     </div>
     <!-- Los filtros se envían como parámetros GET a api/productos.php. -->
     <form id="formFiltros" class="filters">
@@ -17,12 +17,12 @@ require __DIR__ . '/partials/header.php';
         <div><label for="filtroCategoria">Categoría</label><select id="filtroCategoria"><option value="">Todas</option></select></div>
         <div><label for="filtroEstado">Estado</label><select id="filtroEstado"><option value="">Todos</option><option>Activo</option><option>Inactivo</option></select></div>
       </div>
-      <div class="buttons"><button class="primary" type="submit">Consultar</button><button id="btnLimpiarFiltros" class="secondary" type="button">Limpiar</button></div>
+      <div class="buttons"><button class="btn waves-effect waves-light primary" type="submit">Consultar <i class="material-icons right" aria-hidden="true">search</i></button><button id="btnLimpiarFiltros" class="btn waves-effect secondary" type="button">Limpiar</button></div>
     </form>
     <p id="mensajeProductos" class="message" role="status" hidden></p>
     <p id="cantidadResultados" class="results-count" aria-live="polite"></p>
     <div class="table-wrap">
-      <table>
+      <table class="highlight responsive-table">
         <thead><tr><th>Código</th><th>Nombre</th><th>Categoría</th><th>Stock</th><th>Mínimo</th><th>Precio</th><th>Estado</th><th>Acciones</th></tr></thead>
         <!-- JavaScript reemplaza este contenido con los registros recibidos de MySQL. -->
         <tbody id="tablaProductos"><tr><td colspan="8" class="empty">Cargando productos…</td></tr></tbody>

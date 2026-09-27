@@ -51,7 +51,8 @@ a:hover { text-decoration: underline; }
   box-shadow: 0 2px 9px rgba(23, 58, 89, .2);
 }
 .brand-link { color: #fff; font-size: 22px; font-weight: 800; text-decoration: none; letter-spacing: .8px; }
-.app-header nav { display: flex; gap: 20px; flex: 1; }
+.brand-link .material-icons { margin-right: 5px; font-size: 22px; vertical-align: text-bottom; }
+.app-header nav { display: flex; gap: 20px; flex: 1; height: auto; line-height: normal; background: transparent; box-shadow: none; }
 .app-header nav a { color: #e8f0f7; font-weight: 600; text-decoration: none; }
 .app-header nav a:hover { color: #fff; text-decoration: underline; }
 .user-area { display: flex; align-items: center; gap: 12px; font-size: 14px; }
@@ -136,6 +137,8 @@ button, .btn-link {
   text-decoration: none;
   transition: background-color .15s ease, box-shadow .15s ease;
 }
+.btn { height: auto; line-height: 1.4; text-transform: none; }
+.btn .material-icons { line-height: inherit; }
 button:disabled { cursor: not-allowed; opacity: .55; }
 .full-button { width: 100%; }
 .primary { background: var(--blue); color: #fff; }

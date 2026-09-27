@@ -12,7 +12,7 @@ require __DIR__ . '/partials/header.php';
       <h1>Control de inventario</h1>
       <p>Administre productos, entradas, salidas y ajustes desde un solo lugar.</p>
     </div>
-    <a class="btn-link primary" href="nuevo-producto.php">Registrar producto</a>
+    <a class="btn waves-effect waves-light primary" href="nuevo-producto.php">Registrar producto <i class="material-icons right" aria-hidden="true">add_box</i></a>
   </section>
   <section class="menu-grid" aria-label="Módulos disponibles">
     <a class="menu-item badge-blue" href="productos.php"><strong>Productos</strong><span>Consultar, modificar y eliminar productos.</span></a>

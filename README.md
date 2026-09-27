@@ -1,6 +1,6 @@
 # Sistema de Gestión de Inventarios - SGI
 
-Proyecto académico desarrollado con PHP, MySQL, JavaScript, HTML y CSS para la evidencia **GA7-220501096-AA2-EV01 - Codificación de módulos del software**.
+Proyecto académico desarrollado con PHP, MySQL, JavaScript, HTML, CSS y el framework de interfaz Materialize para la evidencia **GA7-220501096-AA3-EV01 - Codificación de módulos del software stand-alone, web y móvil**. La solución se presenta en la modalidad web.
 
 ## Funcionalidades
 
@@ -18,6 +18,7 @@ Proyecto académico desarrollado con PHP, MySQL, JavaScript, HTML y CSS para la 
 - XAMPP con Apache, PHP 8.0 o superior y MySQL.
 - Navegador web moderno.
 - Git para consultar o ampliar el historial de versiones.
+- Conexión a internet para cargar Materialize 1.0.0 y los iconos de Google desde CDN.
 
 ## Instalación en XAMPP
 
@@ -56,6 +57,7 @@ la interfaz y, además, permiten trabajar con sesiones y MySQL.
 - PHP sigue PSR-12: clases en `PascalCase`, métodos y variables en `camelCase`.
 - Tablas y columnas MySQL utilizan `snake_case`.
 - JavaScript utiliza `camelCase` y constantes descriptivas.
+- Materialize 1.0.0 aporta botones, iconos, tablas responsivas, efectos visuales y notificaciones Toast.
 - Las consultas utilizan PDO y sentencias preparadas.
 - La lógica de base de datos está separada de las pantallas.
 - El formulario de productos se reutiliza en creación y edición mediante

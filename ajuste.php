@@ -19,7 +19,7 @@ require __DIR__ . '/partials/header.php';
         <div class="field-full"><label for="observacionAjuste">Observación</label><textarea id="observacionAjuste" name="observacion" rows="3" maxlength="255"></textarea></div>
       </div>
       <p id="mensajeAjuste" class="message" role="status" hidden></p>
-      <div class="buttons"><button class="primary" type="submit">Guardar ajuste</button><button class="secondary" type="reset">Limpiar</button></div>
+      <div class="buttons"><button class="btn waves-effect waves-light primary" type="submit">Guardar ajuste <i class="material-icons right" aria-hidden="true">tune</i></button><button class="btn waves-effect secondary" type="reset">Limpiar</button></div>
     </form>
   </section>
 </main>

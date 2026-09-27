@@ -1,4 +1,4 @@
-# Evidencia GA7-220501096-AA2-EV01
+# Evidencia GA7-220501096-AA3-EV01
 
 ## 1. Descripción del módulo
 
@@ -9,15 +9,22 @@ estando dentro de los archivos `.php`, mientras PHP aporta sesiones, componentes
 reutilizables y conexión con MySQL. La versión inicial permanece recuperable en
 el historial Git, sin mantener archivos duplicados en la versión final.
 
-La solución utiliza una arquitectura cliente-servidor:
+La solución utiliza una arquitectura cliente-servidor y Materialize como framework de presentación:
 
 ```text
-HTML/CSS + JavaScript -> API PHP -> PDO -> MySQL
+Materialize + HTML/CSS + JavaScript -> API PHP -> PDO -> MySQL
 ```
 
 La guía menciona JDBC para proyectos Java. Para esta implementación, y de acuerdo con la orientación del instructor, se utiliza **PDO para MySQL**, que cumple la misma responsabilidad dentro de la tecnología seleccionada: abrir la conexión, preparar sentencias, enviar parámetros, ejecutar operaciones y recuperar resultados.
 
 ## 2. Relación con la lista de chequeo
+
+### Framework aplicado
+
+- Framework: Materialize 1.0.0, seleccionado porque se estudia en el componente formativo de construcción de aplicaciones web.
+- Integración: hojas de estilo, biblioteca JavaScript e iconos cargados desde CDN.
+- Aplicación: botones con efectos, iconos, tablas responsivas y notificaciones Toast.
+- Archivos principales: `partials/header.php`, `partials/footer.php`, `index.php`, `assets/app.js` y las vistas del módulo.
 
 ### Conexión con la base de datos
 
