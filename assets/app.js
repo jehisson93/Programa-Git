@@ -65,6 +65,24 @@ function formatDate(value) {
   return value ? new Date(value.replace(' ', 'T')).toLocaleString('es-CO') : '';
 }
 
+/**
+ * Activa los campos select de Materialize después de crear o cambiar sus
+ * opciones. Si la biblioteca no está disponible, deja visible el selector
+ * nativo del navegador para que el formulario continúe funcionando.
+ */
+function initializeMaterialSelect(select) {
+  if (!select) return;
+
+  if (window.M?.FormSelect) {
+    window.M.FormSelect.getInstance(select)?.destroy();
+    select.classList.remove('browser-default');
+    window.M.FormSelect.init(select);
+    return;
+  }
+
+  select.classList.add('browser-default');
+}
+
 async function loadCatalogs() {
   // Categorías y productos se recuperan una sola vez al abrir cada formulario.
   return apiRequest('api/catalogos.php');
@@ -80,6 +98,7 @@ function fillCategories(select, categories, includeAll = false) {
   select.innerHTML = first + categories.map(category =>
     `<option value="${category.id_categoria}">${escapeHtml(category.nombre)}</option>`
   ).join('');
+  initializeMaterialSelect(select);
 }
 
 function fillProducts(select, products) {
@@ -87,6 +106,7 @@ function fillProducts(select, products) {
   select.innerHTML = '<option value="">Seleccionar</option>' + products.map(product =>
     `<option value="${product.id_producto}">${escapeHtml(product.codigo)} - ${escapeHtml(product.nombre)} (stock: ${product.stock_actual})</option>`
   ).join('');
+  initializeMaterialSelect(select);
 }
 
 // -----------------------------------------------------------------------------
@@ -323,6 +343,17 @@ function exportCsv() {
 
 document.addEventListener('DOMContentLoaded', () => {
   // Este evento se ejecuta cuando la estructura HTML ya está disponible.
+  document.querySelectorAll('select').forEach(initializeMaterialSelect);
+  document.querySelectorAll('form').forEach(form => {
+    // Materialize mantiene una representación visual separada del select real.
+    // Después de resetear el formulario se sincronizan ambas representaciones.
+    form.addEventListener('reset', () => {
+      window.requestAnimationFrame(() => {
+        form.querySelectorAll('select').forEach(initializeMaterialSelect);
+      });
+    });
+  });
+
   document.getElementById('btnCerrarSesion')?.addEventListener('click', async () => {
     await apiRequest('api/auth.php', { method: 'DELETE' });
     window.location.href = 'index.php';
