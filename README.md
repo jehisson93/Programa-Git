@@ -22,11 +22,11 @@ Proyecto académico desarrollado con PHP, MySQL, JavaScript, HTML, CSS y el fram
 
 ## Instalación en XAMPP
 
-1. Copie la carpeta `prototipo_html DEFINITIVO` dentro de `C:\xampp\htdocs\`.
+1. Copie la carpeta `PROYECTO SGI` dentro de `C:\xampp\htdocs\`.
 2. Abra el panel de XAMPP e inicie Apache y MySQL.
 3. Entre a `http://localhost/phpmyadmin`.
 4. Seleccione la pestaña **Importar** e importe `database/schema.sql`.
-5. Abra `http://localhost/prototipo_html%20DEFINITIVO/`.
+5. Abra `http://localhost/PROYECTO%20SGI/`.
 
 Credenciales iniciales:
 
@@ -34,6 +34,19 @@ Credenciales iniciales:
 - Contraseña: `Admin123*`
 
 La conexión predeterminada se encuentra en `config/Database.php` y corresponde a la instalación normal de XAMPP: usuario `root`, sin contraseña y base de datos `sgi_inventario`.
+
+## Contenido del script de base de datos
+
+`database/schema.sql` crea exactamente seis tablas: `rol`, `usuario`,
+`categoria`, `producto`, `movimiento` y `ajuste`. También registra un rol
+administrador, cuatro categorías, el usuario inicial y tres productos de
+ejemplo con los códigos `PROD001`, `PROD002` y `PROD003`.
+
+Los códigos utilizados en las pruebas de la evidencia, como `EV02-589462`, se
+registraron desde la interfaz durante la ejecución de los casos de prueba. No
+forman parte de los datos iniciales del script. El esquema tampoco incluye
+tablas para notificaciones, filtros guardados o administración avanzada de
+usuarios, porque esas funciones no están implementadas en esta versión.
 
 ## Estructura
 

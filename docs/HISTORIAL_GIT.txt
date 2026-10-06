@@ -5,9 +5,13 @@ Este archivo resume los commits realizados en el repositorio local Git.
 La carpeta oculta .git permanece en el proyecto original, pero normalmente
 no se incluye en archivos ZIP creados con el compresor de Windows.
 
-4ae5bc3 refactor: fusionar prototipo y documentar el codigo
-b5e7eac feat: integrar aplicacion PHP y MySQL con el prototipo
 8b068ad chore: registrar prototipo HTML original
+b5e7eac feat: integrar aplicacion PHP y MySQL con el prototipo
+4ae5bc3 refactor: fusionar prototipo y documentar el codigo
+a18e230 docs: incluir historial visible de versiones
+82fff92 Añadido datos
+7d1cc3c feat: integrar Materialize en la interfaz del SGI
+e0e7589 fix: habilitar selectores y evitar cache de JavaScript
 
 Para consultar el historial directamente desde la carpeta original:
 

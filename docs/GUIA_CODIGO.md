@@ -62,9 +62,15 @@ código de reportes en la pantalla de productos, por ejemplo.
 
 ## 6. Base de datos
 
-`database/schema.sql` crea tablas, relaciones, índices y datos iniciales. Las
-claves foráneas evitan registros sin relación válida y los índices aceleran las
-búsquedas. La contraseña inicial se guarda como hash.
+`database/schema.sql` crea las seis tablas de la versión final: `rol`,
+`usuario`, `categoria`, `producto`, `movimiento` y `ajuste`. También define sus
+relaciones, índices y datos mínimos de instalación. Las claves foráneas evitan
+registros sin relación válida y los índices aceleran las búsquedas. La
+contraseña inicial se guarda como hash.
+
+El script inserta únicamente el usuario administrador, las categorías y los
+productos `PROD001`, `PROD002` y `PROD003`. Los códigos usados en las pruebas
+se registran desde la interfaz y no pertenecen a los datos iniciales.
 
 ## 7. Transacciones
 

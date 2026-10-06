@@ -31,6 +31,15 @@ La guía menciona JDBC para proyectos Java. Para esta implementación, y de acue
 - Archivo: `config/Database.php`.
 - Tecnología: PDO con controlador `pdo_mysql`.
 - La conexión utiliza UTF-8, excepciones y consultas preparadas reales.
+- Script entregado: `database/schema.sql`.
+- Tablas incluidas: `rol`, `usuario`, `categoria`, `producto`, `movimiento` y `ajuste`.
+- Datos iniciales: un rol, cuatro categorías, un usuario administrador y los productos `PROD001`, `PROD002` y `PROD003`.
+
+Los productos, movimientos y ajustes identificados con códigos de prueba en el
+informe de la evidencia se crearon desde la aplicación durante la ejecución de
+las pruebas. Por esta razón no aparecen como sentencias `INSERT` en
+`database/schema.sql`. El script contiene la estructura necesaria y solamente
+los datos mínimos para comprobar la instalación desde cero.
 
 ### CRUD
 
@@ -84,6 +93,9 @@ docs: documentar instalación y pruebas del sistema
 10. Eliminar un producto sin historial y luego inactivar uno con historial.
 11. Generar un reporte y exportarlo a CSV.
 12. Mostrar el historial de commits con `git log --oneline`.
+
+Los registros creados en estos pasos son datos temporales de prueba y no forman
+parte del contenido inicial de `database/schema.sql`.
 
 ## 5. Evidencias visuales recomendadas
 
