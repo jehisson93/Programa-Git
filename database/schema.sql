@@ -89,8 +89,9 @@ CREATE TABLE IF NOT EXISTS ajuste (
 
 -- Datos mínimos para probar el sistema inmediatamente después de importar.
 INSERT INTO rol (id_rol, nombre, descripcion) VALUES
-  (1, 'Administrador', 'Acceso completo al sistema')
-ON DUPLICATE KEY UPDATE nombre = VALUES(nombre);
+  (1, 'Administrador', 'Acceso completo al sistema'),
+  (2, 'Operador', 'Acceso operativo al sistema de inventarios')
+ON DUPLICATE KEY UPDATE nombre = VALUES(nombre), descripcion = VALUES(descripcion);
 
 INSERT INTO categoria (id_categoria, nombre, descripcion) VALUES
   (1, 'Electrónica', 'Equipos y accesorios electrónicos'),

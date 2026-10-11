@@ -1,10 +1,11 @@
 # Sistema de Gestión de Inventarios - SGI
 
-Proyecto académico desarrollado con PHP, MySQL, JavaScript, HTML, CSS y el framework de interfaz Materialize para la evidencia **GA7-220501096-AA3-EV01 - Codificación de módulos del software stand-alone, web y móvil**. La solución se presenta en la modalidad web.
+Proyecto académico desarrollado con PHP, MySQL, JavaScript, HTML, CSS y el framework de interfaz Materialize. La aplicación reúne la codificación del módulo web de la evidencia **GA7-220501096-AA3-EV01** y los servicios de registro e inicio de sesión de la evidencia **GA7-220501096-AA5-EV01**.
 
 ## Funcionalidades
 
 - Inicio de sesión con contraseña cifrada.
+- Registro de cuentas de operador desde una sesión administradora.
 - Registro, consulta, actualización y eliminación/inactivación de productos.
 - Filtros por texto, categoría y estado.
 - Registro de entradas y salidas de inventario.
@@ -28,6 +29,9 @@ Proyecto académico desarrollado con PHP, MySQL, JavaScript, HTML, CSS y el fram
 4. Seleccione la pestaña **Importar** e importe `database/schema.sql`.
 5. Abra `http://localhost/PROYECTO%20SGI/`.
 
+Si la base ya estaba instalada antes de incorporar el servicio de registro,
+ejecute una vez `database/migration_auth.sql` desde phpMyAdmin.
+
 Credenciales iniciales:
 
 - Correo: `admin@sgi.local`
@@ -38,15 +42,15 @@ La conexión predeterminada se encuentra en `config/Database.php` y corresponde 
 ## Contenido del script de base de datos
 
 `database/schema.sql` crea exactamente seis tablas: `rol`, `usuario`,
-`categoria`, `producto`, `movimiento` y `ajuste`. También registra un rol
-administrador, cuatro categorías, el usuario inicial y tres productos de
-ejemplo con los códigos `PROD001`, `PROD002` y `PROD003`.
+`categoria`, `producto`, `movimiento` y `ajuste`. También registra los roles
+Administrador y Operador, cuatro categorías, el usuario inicial y tres productos
+de ejemplo con los códigos `PROD001`, `PROD002` y `PROD003`.
 
 Los códigos utilizados en las pruebas de la evidencia, como `EV02-589462`, se
 registraron desde la interfaz durante la ejecución de los casos de prueba. No
 forman parte de los datos iniciales del script. El esquema tampoco incluye
-tablas para notificaciones, filtros guardados o administración avanzada de
-usuarios, porque esas funciones no están implementadas en esta versión.
+tablas para notificaciones o filtros guardados, porque esas funciones no están
+implementadas en esta versión.
 
 ## Estructura
 
@@ -73,10 +77,12 @@ la interfaz y, además, permiten trabajar con sesiones y MySQL.
 - Materialize 1.0.0 aporta botones, iconos, tablas responsivas, efectos visuales y notificaciones Toast.
 - Las consultas utilizan PDO y sentencias preparadas.
 - La lógica de base de datos está separada de las pantallas.
+- El registro de usuarios está limitado al administrador y asigna el rol Operador.
 - El formulario de productos se reutiliza en creación y edición mediante
   `partials/product-form.php`.
 - El código contiene comentarios por bloques y decisiones importantes para
   facilitar su estudio sin repetir explicaciones obvias en cada línea.
 
-Consulte `docs/EVIDENCIA.md` para el guion de presentación y
-`docs/GUIA_CODIGO.md` para estudiar el recorrido del programa.
+Consulte `docs/EVIDENCIA.md` para el guion de presentación,
+`docs/EVIDENCIA_SERVICIOS_WEB.md` para las pruebas de registro y autenticación,
+y `docs/GUIA_CODIGO.md` para estudiar el recorrido del programa.

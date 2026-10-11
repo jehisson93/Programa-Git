@@ -46,6 +46,15 @@ function requireApiAuthentication(): void
     }
 }
 
+function requireAdminApiAuthentication(): void
+{
+    // El registro de cuentas se limita al administrador del sistema.
+    requireApiAuthentication();
+    if ((int) ($_SESSION['usuario_rol'] ?? 0) !== 1) {
+        jsonResponse(['message' => 'No tiene permisos para registrar usuarios.'], 403);
+    }
+}
+
 function requirePageAuthentication(): void
 {
     // En páginas visuales se redirige al inicio en lugar de responder JSON.
@@ -53,6 +62,15 @@ function requirePageAuthentication(): void
     if (empty($_SESSION['usuario_id'])) {
         header('Location: index.php');
         exit;
+    }
+}
+
+function requireAdminPageAuthentication(): void
+{
+    requirePageAuthentication();
+    if ((int) ($_SESSION['usuario_rol'] ?? 0) !== 1) {
+        http_response_code(403);
+        exit('No tiene permisos para acceder a esta página.');
     }
 }
 

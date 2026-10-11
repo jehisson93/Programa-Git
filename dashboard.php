@@ -20,6 +20,9 @@ require __DIR__ . '/partials/header.php';
     <a class="menu-item badge-purple" href="movimiento.php"><strong>Movimientos</strong><span>Registrar entradas y salidas de existencias.</span></a>
     <a class="menu-item badge-yellow" href="ajuste.php"><strong>Ajustes</strong><span>Corregir diferencias del inventario físico.</span></a>
     <a class="menu-item badge-red" href="reportes.php"><strong>Reportes</strong><span>Consultar el inventario y su historial.</span></a>
+    <?php if ((int) ($_SESSION['usuario_rol'] ?? 0) === 1): ?>
+      <a class="menu-item badge-blue" href="registro-usuario.php"><strong>Usuarios</strong><span>Registrar cuentas de operadores del sistema.</span></a>
+    <?php endif; ?>
   </section>
 </main>
 <?php require __DIR__ . '/partials/footer.php'; ?>

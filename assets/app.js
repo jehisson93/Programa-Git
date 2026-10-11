@@ -127,6 +127,34 @@ async function initializeLogin() {
 }
 
 // -----------------------------------------------------------------------------
+// Registro de usuarios
+// -----------------------------------------------------------------------------
+
+async function initializeUserRegistration() {
+  document.getElementById('formRegistroUsuario').addEventListener('submit', async event => {
+    event.preventDefault();
+    hideMessage('mensajeRegistroUsuario');
+
+    const data = formToObject(event.target);
+    if (data.contrasena !== data.confirmar_contrasena) {
+      showMessage('mensajeRegistroUsuario', 'Las contraseñas no coinciden.', 'error');
+      return;
+    }
+
+    delete data.confirmar_contrasena;
+    try {
+      const result = await apiRequest('api/registro.php', {
+        method: 'POST', body: JSON.stringify(data)
+      });
+      showMessage('mensajeRegistroUsuario', result.message);
+      event.target.reset();
+    } catch (error) {
+      showMessage('mensajeRegistroUsuario', error.message, 'error');
+    }
+  });
+}
+
+// -----------------------------------------------------------------------------
 // CRUD de productos: crear, consultar, actualizar y eliminar
 // -----------------------------------------------------------------------------
 
@@ -362,6 +390,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // data-page del body decide qué funciones necesita cada página.
   const initializers = {
     login: initializeLogin,
+    registroUsuario: initializeUserRegistration,
     nuevoProducto: initializeNewProduct,
     productos: initializeProducts,
     editarProducto: initializeEditProduct,
