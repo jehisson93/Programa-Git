@@ -48,8 +48,8 @@ final class Inventario
                 'motivo' => textValue($data, 'motivo', 100),
                 'observacion' => textValue($data, 'observacion', 255, false),
             ]);
-            $this->updateStock($productId, $newStock);
             $movementId = (int) $this->connection->lastInsertId();
+            $this->updateStock($productId, $newStock);
             // commit hace permanentes el historial y el nuevo stock.
             $this->connection->commit();
             return $movementId;
@@ -91,8 +91,8 @@ final class Inventario
                 'motivo' => textValue($data, 'motivo', 100),
                 'observacion' => textValue($data, 'observacion', 255, false),
             ]);
-            $this->updateStock($productId, $newStock);
             $adjustmentId = (int) $this->connection->lastInsertId();
+            $this->updateStock($productId, $newStock);
             $this->connection->commit();
             return $adjustmentId;
         } catch (Throwable $exception) {
