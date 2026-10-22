@@ -26,7 +26,7 @@ $pageTitle = $pageTitle ?? 'Sistema de Gestión de Inventarios';
       <a href="ajuste.php">Ajustes</a>
       <a href="reportes.php">Reportes</a>
       <?php if ((int) ($_SESSION['usuario_rol'] ?? 0) === 1): ?>
-        <a href="registro-usuario.php">Usuarios</a>
+        <a href="usuarios.php">Usuarios</a>
       <?php endif; ?>
     </nav>
     <div class="user-area">

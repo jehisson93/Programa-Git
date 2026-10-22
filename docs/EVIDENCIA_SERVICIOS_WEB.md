@@ -15,6 +15,8 @@ La ruta base depende de la ubicación configurada para el proyecto en el servido
 | Autenticación | `POST` | `api/auth.php` | Iniciar sesión | Pública |
 | Autenticación | `DELETE` | `api/auth.php` | Cerrar la sesión | Sesión actual |
 | Usuarios | `POST` | `api/registro.php` | Registrar un usuario Operador | Administrador |
+| Usuarios | `GET` | `api/usuarios.php` | Listar las cuentas registradas | Administrador |
+| Usuarios | `PATCH` | `api/usuarios.php?id={id}` | Activar o desactivar una cuenta | Administrador |
 | Productos | `GET` | `api/productos.php` | Listar o buscar productos | Usuario autenticado |
 | Productos | `POST` | `api/productos.php` | Crear un producto | Usuario autenticado |
 | Productos | `PUT` | `api/productos.php?id={id}` | Actualizar un producto | Usuario autenticado |
@@ -104,6 +106,19 @@ Respuesta (`201 Created`):
 ```
 
 Se comprueba que todos los campos estén presentes, que el usuario sea un correo válido, que la contraseña tenga al menos ocho caracteres y que el correo y el documento no estén repetidos. La contraseña se guarda mediante un hash. El servicio puede responder `401` si no hay sesión, `403` si el usuario no es administrador, `409` si existe un duplicado, `422` si los datos no son válidos o `503` si el rol Operador no está configurado.
+
+### Gestión básica de cuentas
+
+La vista `usuarios.php` permite que el administrador consulte las cuentas y cambie su estado entre `Activo` e `Inactivo`. Para conservar la trazabilidad no se eliminan usuarios. El servicio también impide que el administrador desactive la cuenta con la que mantiene abierta la sesión.
+
+- **Listar:** `GET api/usuarios.php`.
+- **Cambiar estado:** `PATCH api/usuarios.php?id={id}`.
+
+```json
+{
+  "estado": "Inactivo"
+}
+```
 
 ## 3. Servicio de productos
 

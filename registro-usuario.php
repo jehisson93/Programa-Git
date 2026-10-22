@@ -45,6 +45,7 @@ require __DIR__ . '/partials/header.php';
       <div class="buttons">
         <button class="btn waves-effect waves-light primary" type="submit">Registrar usuario <i class="material-icons right" aria-hidden="true">person_add</i></button>
         <button class="btn waves-effect waves-light dark" type="reset">Limpiar</button>
+        <a class="btn waves-effect waves-light secondary" href="usuarios.php">Ver usuarios</a>
       </div>
     </form>
   </section>

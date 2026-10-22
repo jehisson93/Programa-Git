@@ -21,7 +21,7 @@ require __DIR__ . '/partials/header.php';
     <a class="menu-item badge-yellow" href="ajuste.php"><strong>Ajustes</strong><span>Corregir diferencias del inventario físico.</span></a>
     <a class="menu-item badge-red" href="reportes.php"><strong>Reportes</strong><span>Consultar el inventario y su historial.</span></a>
     <?php if ((int) ($_SESSION['usuario_rol'] ?? 0) === 1): ?>
-      <a class="menu-item badge-blue" href="registro-usuario.php"><strong>Usuarios</strong><span>Registrar cuentas de operadores del sistema.</span></a>
+      <a class="menu-item badge-blue" href="usuarios.php"><strong>Usuarios</strong><span>Consultar, registrar, activar o desactivar cuentas.</span></a>
     <?php endif; ?>
   </section>
 </main>

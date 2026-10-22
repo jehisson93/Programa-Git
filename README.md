@@ -6,6 +6,7 @@ Proyecto académico desarrollado con PHP, MySQL, JavaScript, HTML, CSS y el fram
 
 - Inicio de sesión con contraseña cifrada.
 - Registro de cuentas de operador desde una sesión administradora.
+- Consulta y activación o desactivación de usuarios por parte del administrador.
 - Registro, consulta, actualización y eliminación/inactivación de productos.
 - Filtros por texto, categoría y estado.
 - Registro de entradas y salidas de inventario.

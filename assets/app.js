@@ -155,6 +155,68 @@ async function initializeUserRegistration() {
 }
 
 // -----------------------------------------------------------------------------
+// Gestión básica de usuarios
+// -----------------------------------------------------------------------------
+
+async function initializeUsers() {
+  const table = document.getElementById('tablaUsuarios');
+
+  table.addEventListener('click', async event => {
+    const button = event.target.closest('[data-user-status]');
+    if (!button) return;
+
+    const nextStatus = button.dataset.userStatus;
+    const action = nextStatus === 'Activo' ? 'activar' : 'desactivar';
+    if (!window.confirm(`¿Desea ${action} la cuenta de ${button.dataset.userName}?`)) return;
+
+    try {
+      const result = await apiRequest(`api/usuarios.php?id=${button.dataset.userId}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ estado: nextStatus })
+      });
+      showMessage('mensajeUsuarios', result.message);
+      await loadUsers();
+    } catch (error) {
+      showMessage('mensajeUsuarios', error.message, 'error');
+    }
+  });
+
+  await loadUsers();
+}
+
+async function loadUsers() {
+  try {
+    const result = await apiRequest('api/usuarios.php');
+    const table = document.getElementById('tablaUsuarios');
+    document.getElementById('cantidadUsuarios').textContent = `${result.usuarios.length} usuario(s) registrado(s)`;
+
+    table.innerHTML = result.usuarios.length ? result.usuarios.map(user => {
+      const isActive = user.estado === 'Activo';
+      const fullName = `${user.nombres} ${user.apellidos}`.trim();
+      const action = user.es_usuario_actual
+        ? '<span class="help">Sesión actual</span>'
+        : `<button class="${isActive ? 'danger-link' : 'activate-link'}" type="button"
+            data-user-id="${user.id_usuario}"
+            data-user-status="${isActive ? 'Inactivo' : 'Activo'}"
+            data-user-name="${escapeHtml(fullName)}">
+            ${isActive ? 'Desactivar' : 'Activar'}
+          </button>`;
+
+      return `<tr>
+        <td>${escapeHtml(fullName)}</td>
+        <td>${escapeHtml(user.documento)}</td>
+        <td>${escapeHtml(user.correo)}</td>
+        <td>${escapeHtml(user.rol)}</td>
+        <td><span class="status ${isActive ? 'ok' : 'low'}">${escapeHtml(user.estado)}</span></td>
+        <td class="actions">${action}</td>
+      </tr>`;
+    }).join('') : '<tr><td colspan="6" class="empty">No hay usuarios registrados.</td></tr>';
+  } catch (error) {
+    showMessage('mensajeUsuarios', error.message, 'error');
+  }
+}
+
+// -----------------------------------------------------------------------------
 // CRUD de productos: crear, consultar, actualizar y eliminar
 // -----------------------------------------------------------------------------
 
@@ -391,6 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const initializers = {
     login: initializeLogin,
     registroUsuario: initializeUserRegistration,
+    usuarios: initializeUsers,
     nuevoProducto: initializeNewProduct,
     productos: initializeProducts,
     editarProducto: initializeEditProduct,

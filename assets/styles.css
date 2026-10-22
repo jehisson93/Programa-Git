@@ -210,6 +210,7 @@ tbody tr:hover { background: #edf3f7; }
 .actions { white-space: nowrap; }
 .actions a { margin-right: 10px; }
 .danger-link { padding: 0; color: var(--red); background: transparent; font-weight: 600; }
+.activate-link { padding: 0; color: var(--green); background: transparent; font-weight: 600; }
 .align-end { align-items: flex-end; }
 
 /* 7. En celular se apilan columnas y botones para conservar legibilidad. */
